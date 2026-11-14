@@ -1,6 +1,6 @@
 using System;
+using System.Text;
 
-// Holds one word of the scripture and whether it is currently hidden.
 public class Word
 {
     private string _text;
@@ -8,23 +8,38 @@ public class Word
 
     public Word(string text)
     {
+        _text = text;
+        _isHidden = false;
     }
 
     public void Hide()
     {
+        _isHidden = true;
     }
 
     public void Show()
     {
+        _isHidden = false;
     }
 
     public bool IsHidden()
     {
-        return false;
+        return _isHidden;
     }
+
 
     public string GetDisplayText()
     {
-        return "";
+        if (!_isHidden)
+        {
+            return _text;
+        }
+
+        StringBuilder hidden = new StringBuilder();
+        foreach (char c in _text)
+        {
+            hidden.Append(char.IsLetter(c) ? '_' : c);
+        }
+        return hidden.ToString();
     }
 }
